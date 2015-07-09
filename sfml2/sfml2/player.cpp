@@ -55,7 +55,10 @@ void player::update(std::vector<std::string>map, sf::Keyboard& keyb, sf::Mouse& 
 			if (map[i].at(j) == '1' || map[i].at(j) == '2' ){
 				sf::Vector2f here(j * 25, i * 25);
 				hereShape.setPosition(here);
+				int rot = shape.getRotation();
+				shape.setRotation(0);
 				if (hereShape.getGlobalBounds().intersects(shape.getGlobalBounds())){
+					std::cout << "STOP TOUCH WALL " << std::endl;
 					/*
 					//shape.setOrigin(sf::Vector2f(0, 0));
 					int xx = shape.getPosition().x - here.x;
@@ -83,6 +86,7 @@ void player::update(std::vector<std::string>map, sf::Keyboard& keyb, sf::Mouse& 
 					eh = true;
 					//shape.setOrigin(sf::Vector2f(60, 41));
 				}
+				shape.setRotation(rot);
 			}
 		}
 	}
