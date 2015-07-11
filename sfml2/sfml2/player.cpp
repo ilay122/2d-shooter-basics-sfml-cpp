@@ -21,9 +21,10 @@ player::~player()
 }
 void player::update(std::vector<std::string>map, sf::Keyboard& keyb, sf::Mouse& mous, sf::RenderWindow& win){
 	sf::Vector2i curpos = mous.getPosition(win);
+	sf::Vector2f worldPos = win.mapPixelToCoords(curpos);
 	sf::Vector2f playpos = shape.getPosition();
-	float dx = playpos.x - curpos.x;
-	float dy = playpos.y - curpos.y;
+	float dx = playpos.x - worldPos.x;
+	float dy = playpos.y - worldPos.y;
 
 	double angle = (atan2(dy, dx)) * 180 / PI;
 	shape.setRotation(angle+180);
@@ -102,6 +103,12 @@ void player::update(std::vector<std::string>map, sf::Keyboard& keyb, sf::Mouse& 
 	
 }
 void player::draw(sf::RenderWindow& a){
+
+	sf::View view = a.getDefaultView();
+	view.setCenter(shape.getPosition());
+	a.setView(view);
+
+	
 	for (int i = 0; i < bulletsshot.size(); i++){
 		a.draw(bulletsshot[i].shape);
 	}
